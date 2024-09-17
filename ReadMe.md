@@ -10,6 +10,17 @@ This project is a Node.js and Express backend that provides various API endpoint
 - npm (v6 or higher)
 - MongoDB
 
+## To note
+
+- The server has been updated to support HTTPS.
+- If accessing HTTP server via port 8080, the server will redirect the client to the HTTPS server on port 3000.
+- The signed key and certificate are available in /Certs directory and was self-generated (not from a CA) via:
+```bash
+openssl genrsa -out private.key 2048
+openssl req -new -key private.key -out certificate.csr -subj "/CN=localhost"
+openssl x509 -req -days 365 -in certificate.csr -signkey private.key -out certificate.crt
+```
+
 ## Installation
 
 1. **Clone the repository:**
