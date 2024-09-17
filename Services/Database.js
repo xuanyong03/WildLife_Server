@@ -7,10 +7,11 @@ const mongoose = require("mongoose");
 const logger = require("./Logger.js");
 
 // Connect to MongoDB
+const dbName = "wildlifedb_main";
 const connectToDatabase = async () => {
   try {
-    await mongoose.connect("mongodb://localhost:27017/wildlifedb_main");
-    logger.info("Connected to MongoDB");
+    await mongoose.connect(`mongodb://localhost:27017/${dbName}`);
+    logger.info("Connected to MongoDB.");
     await createAdminUser();
   } catch (err) {
     logger.error(err);
@@ -38,6 +39,7 @@ const User = mongoose.model("Users", UserSchema);
 
 // Generate a default admin user if not exist
 const createAdminUser = async () => {
+  logger.info("Database: Checking for admin user.");
   try {
     // Check if admin exists
     const existingAdmin = await User.findOne({
@@ -56,9 +58,9 @@ const createAdminUser = async () => {
       });
       // Save the admin user in the database
       await admin.save();
-      logger.info("Database: Admin user created");
+      logger.info("Database: Admin user created.");
     } else {
-      logger.info("Database: Admin user already exists");
+      logger.info("Database: Admin user already exists.");
     }
   } catch (err) {
     logger.error(err);
