@@ -4,15 +4,16 @@
 // Returns: Database connection and User Schema
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
+const logger = require("./Logger.js");
 
 // Connect to MongoDB
 const connectToDatabase = async () => {
   try {
     await mongoose.connect("mongodb://localhost:27017/wildlifedb_main");
-    console.log("Connected to MongoDB");
+    logger.info("Connected to MongoDB");
     await createAdminUser();
   } catch (err) {
-    console.error(err);
+    logger.error(err);
   }
 };
 
@@ -55,12 +56,12 @@ const createAdminUser = async () => {
       });
       // Save the admin user in the database
       await admin.save();
-      console.log("Admin user created");
+      logger.info("Database: Admin user created");
     } else {
-      console.log("Admin user already exists");
+      logger.info("Database: Admin user already exists");
     }
   } catch (err) {
-    console.error(err);
+    logger.error(err);
   }
 };
 
